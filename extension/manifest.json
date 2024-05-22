@@ -1,0 +1,51 @@
+{
+  "name": "FHIR-Side Resource Viewer",
+  "version": "0.1",
+  "manifest_version": 3,
+  "description": "Displays FHIR resources beautifully in a side panel.",
+  "action": {
+    "default_icon": {
+      "16": "images/icon-16.png",
+      "32": "images/icon-32.png",
+      "48": "images/icon-48.png",
+      "128": "images/icon-128.png"
+    }
+  },
+  "background": {
+    "service_worker": "service-worker.js"
+  },
+  "commands": {
+    "toggle-panel": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Right"
+      },
+      "description": "Hide or show the side panel for the current resource."
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "run_at": "document_end",
+      "js": ["content-script.js"]
+    }
+  ],
+  "host_permissions": ["<all_urls>"],
+  "icons": {
+    "128": "images/icon-128.png",
+    "48": "images/icon-48.png",
+    "32": "images/icon-32.png",
+    "16": "images/icon-16.png"
+  },
+  "permissions": [
+    "activeTab",
+    "commands",
+    "scripting",
+    "sidePanel",
+    "storage",
+    "tabs"
+  ],
+  "side_panel": {
+    "default_path": "sidepanel.html",
+    "openPanelOnActionClick": true
+  }
+}
