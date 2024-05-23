@@ -83,6 +83,9 @@ chrome.runtime.onMessage.addListener(async (message, sender, _) => {
     chrome.storage.session
       .set({ jsonResource: message.json })
       .then(() => {
+        //
+        // TODO: change the panel icon to indicate activity.
+        //
         console.debug("received resource saved to session storage");
       })
       .catch(console.error);
