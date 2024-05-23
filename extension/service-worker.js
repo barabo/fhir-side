@@ -18,8 +18,8 @@ var panelIsOpen = false;
 // Returns true if the url suggests the user is viewing a FHIR resource.
 const enablePanelFor = (url) => {
   if (!url) return false;
-  if (!url.includes('/fhir/')) return false;
-  return /\?_format=json$/.test(url);
+  const u = new URL(url);
+  return u.pathname.includes('/fhir/');
 };
 
 
@@ -80,6 +80,9 @@ chrome.commands.onCommand.addListener(async (command) => {
 // Place received JSON resources in session storage.
 chrome.runtime.onMessage.addListener(async (message, sender, _) => {
   if (message.action === 'receiveJsonResource') {
+    //
+    // TODO: warn if the current tab does not have the panel enabled.
+    //
     chrome.storage.session
       .set({ jsonResource: message.json })
       .then(() => {
